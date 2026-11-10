@@ -1,0 +1,15 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Conectar WhatsApp - jarvis-gate</title></head><body style="font-family:sans-serif;max-width:640px;margin:3em auto;padding:0 1em">
+<h1>Conectar o WhatsApp de atendimento</h1>
+<p>Esta pagina conecta o numero de WhatsApp Business da empresa ao assistente jarvis-gate, mantendo o aplicativo WhatsApp Business no celular (coexistencia).</p>
+<button id="b" style="font-size:1.1em;padding:.6em 1.2em" disabled>Conectar WhatsApp</button>
+<pre id="s" style="white-space:pre-wrap;background:#f4f4f4;padding:1em;margin-top:1em">Carregando...</pre>
+<p><a href="whatsapp-privacidade.html">Politica de privacidade</a> &middot; <a href="whatsapp-exclusao.html">Exclusao de dados</a></p>
+<script>
+const s=document.getElementById('s'),b=document.getElementById('b');
+const log=t=>{s.textContent+= '\n'+t};
+window.addEventListener('message',e=>{if(!/facebook\.com$/.test(new URL(e.origin).hostname))return;try{const d=JSON.parse(e.data);if(d.type==='WA_EMBEDDED_SIGNUP')log('Resultado: '+JSON.stringify(d.data||d.event))}catch(_){}});
+window.fbAsyncInit=function(){FB.init({appId:'2069050610668681',autoLogAppEvents:true,xfbml:false,version:'v23.0'});s.textContent='Pronto.';b.disabled=false};
+b.onclick=()=>FB.login(r=>{if(r.authResponse&&r.authResponse.code)log('Autorizado. Codigo recebido (trocado no servidor).');else log('Cancelado.')},{config_id:'2649783538793839',response_type:'code',override_default_response_type:true,extras:{setup:{},featureType:'whatsapp_business_app_onboarding',sessionInfoVersion:'3'}});
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js"></script>
+</body></html>
